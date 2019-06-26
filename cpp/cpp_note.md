@@ -65,8 +65,10 @@ public:
       // usage
       Vec<int> vec;
   
+      // typedef与template的设计思路不相容, 因此应当使用using
       template <typename T>
       typedef MyVector<T, MyAlloc<T>> Vec;
       // usage
       Vec<int> vec;
+      // error: a typedef cannot be a template
       ```
