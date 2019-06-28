@@ -110,7 +110,7 @@ public:
                 }
                 A(char c) = delete;
                 /*
-                相当于在试图调用以char类型变量为参数的构造函数时调用析构函数，以表明这种类型的构造时无效的
+                相当于在试图调用以char类型变量为参数的构造函数时调用析构函数，以表明这种类型的构造是无效的
                 */
             private:
                 int _i;
@@ -164,3 +164,108 @@ public:
     CppString s2 = tmp;
     ```
     本来`CppString`是没有接受字符类型的构造函数的，但是因为`a`可以被转换成`int`，并且存在`int -> CppString`的隐式转换，本应出错的语句被错误地执行，字符类型错误地被接受，在编译时期应该暴露的错误被隐藏，这会产生潜在的问题
+
+## 三、函数模板
+### 1. `std::transform`
+有数组`A`，现需要将`A`内的每个元素`+5`，将结果放到数组`B`中
+* 写法一
+  * 假设`A`，`B`的类型是`int`，那么
+    ```cpp
+    // 伪码
+    int * add_int_5(int * A, int * B){
+        for (i : len(A)){
+            B[i] = A[i]+5;
+        }
+    }
+    ```
+  * 假设`A`，`B`的类型是`float`，那么
+    ```cpp
+    // 伪码
+    float * add_float_5(float * A, float * B){
+        for (i : len(A)){
+            B[i] = A[i]+5;
+        }
+    }
+    ```
+* 写法二
+  * 假设`A`，`B`的类型是`int`，那么
+    ```cpp
+    // 伪码
+    int * add_int_value(int * A, int * B, int value){
+        for (i : len(A)){
+            B[i] = A[i]+value;
+        }
+    }
+    ```
+  * 假设`A`，`B`的类型是`float`，那么
+    ```cpp
+    // 伪码
+    float * add_float_value(float * A, float * B, float value){
+        for (i : len(A)){
+            B[i] = A[i]+value;
+        }
+    }
+    ```
+> 写法一、二是弹性最差的两种写法：
+>  * 写法一将类型、改变量绑定函数上：针对不同类型的`A`，`B`以及不同的改变量都要实现相应的函数，如`add_int_1`，`add_int_2`，`add_float_1`，`add_float_2`
+>  * 写法二将类型绑定在函数上，虽然与写法一相比，解耦了改变量，改变量可以以参数的形式传入函数，但是对于不同的参数类型，仍然需要实现对应的函数，如`add_int_value`，`add_float_value`，`add_double_value`
+* 写法三
+  * 假设`A`，`B`的类型是`int`，那么 
+    ```cpp
+    vector<int> A, B;
+    std::transform(A.begin(),
+                   A.end(),
+                   B.begin(),
+                   [](int a){ a *= 5; });
+    ```
+  * 假设`A`，`B`的类型是`float`，那么 
+    ```cpp
+    vector<float> A, B;
+    std::transform(A.begin(),
+                   A.end(),
+                   B.begin(),
+                   [](float a){ a *= 5; });
+    ```
+* 写法四
+  * 先实现一个函数模板
+    ```cpp
+    template <typename T, T value>
+    T addValue(const T& x){
+        return x + value;
+    }
+    ```
+  * 假设`A`，`B`的类型是`int`，那么
+    ```cpp
+    std::transform(A.begin(),
+                   A.end(),
+                   B.begin(),
+                   addValue(std::vector<int>::value_type, 10));
+    ```
+  * 假设`A`，`B`的类型是`float`，那么
+    ```cpp
+    std::transform(A.begin(),
+                   A.end(),
+                   B.begin(),
+                   addValue(std::vector<float>::value_type, 10));
+    ```
+    * 关于`std::vector<int>::value_type`
+      * 在`std::vector`中的定义：
+        ```cpp
+        typedef T value_type;
+        ```
+      * 相当于一个新的类型声明[[`typedef`关键字]]()
+        ```cpp
+        template <typename T>
+        class A{
+        public:
+            typedef T type_1;
+            typedef struct{
+                int a;
+                int b;
+            } type_2;
+            typedef double type_3;
+        }
+        typedef A class_a;
+        ```
+        其中`type_1`，`type_2`，`type_3`是`class A`中的类型，相当于嵌套类
+
