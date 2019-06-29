@@ -268,4 +268,22 @@ public:
         typedef A class_a;
         ```
         其中`type_1`，`type_2`，`type_3`是`class A`中的类型，相当于嵌套类
-
+    * 关于`addValue<int, 5>`的强制类型转换
+      * [参考](https://blog.csdn.net/lanchunhui/article/details/49634077)
+      * `addValue<int, 5>`是函数模板的一个实例化版本，而 __函数模板的实例通常被视为命名一组重载函数的集合(即便集合中只有一个元素)__ 。在一些较老的`C++`版本中，重函数的集合不能用于模板参数(即`addValue<int, 5`>不能直接传入`std::transform()`)，需要进行强制转换
+        ```cpp
+        std::transform(ivec.begin(), ivec.end(), dst.begin(),
+                       (int(*)(const int&))addValue<int, 5>);
+        ```
+      * 但是在如下编译环境下，不进行上述强制类型转换也能成功编译
+        ```bash
+        Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include/c++/4.2.1
+        Apple LLVM version 10.0.1 (clang-1001.0.46.4)
+        Target: x86_64-apple-darwin18.6.0
+        Thread model: posix
+        InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+        ```
+      * 可能与下述内容相关
+        - [ ] 模板的类型推断
+        - [ ] 指向模板函数的指针
+        - [ ] 函数重载与函数指针
