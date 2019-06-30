@@ -287,3 +287,6 @@ public:
         - [ ] 模板的类型推断
         - [ ] 指向模板函数的指针
         - [ ] 函数重载与函数指针
+
+## 四、常量指针与指针常量
+![const&ptr](https://jaydhipic.oss-cn-beijing.aliyuncs.com/2019-06/30/const%26ptr.jpg)
