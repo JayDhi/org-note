@@ -34,4 +34,34 @@
         ```cpp
         max<double>(4, 4.2)
         ```
-        
+
+### 特化、偏特化、全特化
+* 全特化
+    * 指定全部模板参数类型
+        ```cpp
+        template <> Class A<double, int>{}
+        ```
+    * 特点: 
+      * 模板参数列表: 置空
+      * 调用参数列表: 显式指定类型
+
+* 偏特化
+  * 指定部分模板参数类型
+    ```cpp
+    template <typename T> Class A<T, int>{}
+    ```
+  * 进一步限制模板参数(引用、指针)
+    ```cpp
+    template <typename T1, typename T2> Class A<T1&, T2&>{}
+    template <typename T1, typename T2> Class A<T1*, T2*>{}
+    ```
+  * 特点: 
+    * 模板参数列表: 保留范型参数
+    * 调用参数列表: (限制型)范型参数+特化类型
+```cpp
+template <typename T> Class A{}
+template <> Class A<int>{}
+template <typename T> Class A<const T *>{}
+template <typename T> Class A<T *>{}
+template <typename T> Class A<T, int>{}
+```
