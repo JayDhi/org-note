@@ -270,6 +270,7 @@ public:
         其中`type_1`，`type_2`，`type_3`是`class A`中的类型，相当于嵌套类
     * 关于`addValue<int, 5>`的强制类型转换
       * [参考](https://blog.csdn.net/lanchunhui/article/details/49634077)
+      * [cpp_core_issue 115](http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html)
       * `addValue<int, 5>`是函数模板的一个实例化版本，而 __函数模板的实例通常被视为命名一组重载函数的集合(即便集合中只有一个元素)__ 。在一些较老的`C++`版本中，重函数的集合不能用于模板参数(即`addValue<int, 5`>不能直接传入`std::transform()`)，需要进行强制转换
         ```cpp
         std::transform(ivec.begin(), ivec.end(), dst.begin(),
