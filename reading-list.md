@@ -100,7 +100,15 @@
 - [ ] [C++基础之引用与typedef](https://blog.csdn.net/fan_xingwang/article/details/82118269)
 - [ ] [C及C++中typedef的简单使用指南](https://www.cnblogs.com/dmego/p/5944169.html)
 - [ ] [【C/C++开发】STL内嵌数据类型： value_type](https://www.cnblogs.com/huty/p/8517000.html)
-- [ ] 
+- [ ] [C++ STL 泛化，全特化，偏特化](https://blog.csdn.net/zwjzwj108108/article/details/79122711)
+- [ ] [C++模板特化与偏特化](https://blog.csdn.net/K346K346/article/details/82179205)
+- [ ] [[C++ Primer Plus]实例化与具体化](https://blog.csdn.net/u012481976/article/details/80955018)
+- [ ] [C++模板的特化（函数模板特化，类模板特化）与实例化区别联系](https://blog.csdn.net/baidu_37964044/article/details/79492956)
+- [ ] [函数模板全特化与偏特化](https://blog.csdn.net/linuxheik/article/details/86010090)
+- [ ] [Linux C/C++ 模板：主模板、完全特化、局部特化](https://blog.csdn.net/guowenyan001/article/details/44987379)
+- [ ] [指针常量和常量指针的区别和巧记方式](https://blog.csdn.net/youyou519/article/details/82704401)
+- [ ] [局部特化 & 特化](https://www.cnblogs.com/charlesblc/p/6481276.html)
+- [ ] [现代C++函数式编程](https://blog.csdn.net/byeweiyang/article/details/80124921)
 
 ## `Python`
 - [ ] [Python元编程：控制你想控制的一切](https://blog.csdn.net/qq_41235053/article/details/81591926)
